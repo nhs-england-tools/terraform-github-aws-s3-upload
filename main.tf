@@ -23,7 +23,7 @@ resource "aws_iam_policy" "github_s3_list_bucket_policy" {
       {
         Effect   = "Allow"
         Action   = ["s3:ListBucket"]
-        Resource = ["arn:aws:s3::${data.aws_caller_identity.current}:${var.s3_bucket_name}"]
+        Resource = ["arn:aws:s3::${data.aws_caller_identity.current.account_id}:${var.s3_bucket_name}"]
       }
     ]
   })
