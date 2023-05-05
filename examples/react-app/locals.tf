@@ -1,4 +1,4 @@
 locals {
-s3_bucket_name = "terraform-github-action-s3-upload"
+s3_bucket_name = "nhs-england-tools-terraform"
 
 }
