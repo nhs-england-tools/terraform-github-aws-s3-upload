@@ -1,8 +1,9 @@
 # Repository Template
 
-Start with an overview or a brief description of what the project is about and what it does.
+This module provides the iam role and policy for a GitHub action to use to upload files to an S3 bucket. This module includes the following:
 
-There is an expectation that each file of this repository template is concise and self-documented.
+1. IAM role
+1. IAM policy
 
 ## Table of Contents
 
@@ -20,18 +21,31 @@ There is an expectation that each file of this repository template is concise an
 
 ## Installation
 
-By including preferably a one-liner or if necessary a set of clear CLI instructions we improve user experience. This should be a frictionless installation process that works on various operating systems (macOS, Linux, Windows WSL) and handles all the dependencies.
+This module can be called by including the following:
 
-```shell
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/org/repo/branch/install.sh)"
+```hcl
+module "github_action_s3_upload" {
+  source               = "github.com/nhs-england-tools/terraform-github-action-s3-upload?ref=v0.0.1"
+  project_name         = "my_github_action_s3_upload1"
+  s3_bucket_name       = "my_s3_bucket_to_upload_to"
+  s3_bucket_actions    = ["s3:PutObject"]
+  s3_bucket_resources  = [
+    "arn:aws:s3:::my_s3_bucket_to_upload_to/some_file.js",
+    "arn:aws:s3:::my_s3_bucket_to_upload_to/some_other_file.js"
+    ]
+  github_organisation  = "my_github_organisation"
+  github_repo          = "my_github_repo"
+  github_branch        = "my_main_branch"
+}
 ```
+
+It's worth noting that the `github_branch` variable will default to `main`.
 
 ### Prerequisites
 
 The following software packages or their equivalents are expected to be installed
 
-- [GNU make](https://www.gnu.org/software/make/)
-- [Docker](https://www.docker.com/)
+- [Terraform](https://developer.hashicorp.com/terraform/downloads)
 
 ## Usage
 
