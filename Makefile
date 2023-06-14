@@ -1,8 +1,23 @@
-config: githooks-install # Configure development environment
+NODEJS_VERSION = 20.3.0
+TERRAFORM_VERSION = 1.5.0
+
+config: # Configure development environment
+	make \
+		githooks-install \
+		node-install \
+		terraform-install
 
 githooks-install: # Install git hooks configured in this repository
 	echo "./scripts/githooks/pre-commit" > .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
+
+terraform-install: # Install Terraform
+	asdf plugin add terraform ||:
+	asdf install terraform ${TERRAFORM_VERSION}
+
+node-install: # Install Node.js
+	asdf plugin add nodejs ||:
+	asdf install nodejs ${NODEJS_VERSION}
 
 # ==============================================================================
 

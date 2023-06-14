@@ -2,7 +2,6 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_iam_policy" "github_s3_deploy_policy" {
   name = "${var.project_name}_github_s3_deploy_policy"
-
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -32,7 +31,6 @@ resource "aws_iam_policy" "github_s3_list_bucket_policy" {
 
 resource "aws_iam_role" "github_s3_deploy_role" {
   name = "${var.project_name}_github_s3_deploy_role"
-
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -45,7 +43,7 @@ resource "aws_iam_role" "github_s3_deploy_role" {
         Condition = {
           StringLike = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-            "token.actions.githubusercontent.com:sub" = "repo:${var.github_organisation}/${var.github_repo}:ref:refs/heads/${var.github_branch}"
+            "token.actions.githubusercontent.com:sub" = "repo:${var.github_organisation}/${var.github_repository}:ref:refs/heads/${var.github_branch}"
           }
         }
       }

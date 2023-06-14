@@ -10,6 +10,6 @@ module "github_action_s3_upload" {
     "arn:aws:s3:::${local.s3_bucket_name}/*.svg",
   ]
   github_organisation = "nhs-england-tools"
-  github_repo         = "terraform-github-action-s3-upload"
-  github_branch = "ENG-XXX-create_github_action_module"
+  github_repository   = "terraform-github-action-s3-upload"
+  github_branch       = "ENG-XXX-create_github_action_module"
 }

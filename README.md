@@ -34,7 +34,7 @@ module "github_action_s3_upload" {
     "arn:aws:s3:::my_s3_bucket_to_upload_to/some_other_file.js"
     ]
   github_organisation  = "my_github_organisation"
-  github_repo          = "my_github_repo"
+  github_repository    = "my_github_repository"
   github_branch        = "my_main_branch"
 }
 ```

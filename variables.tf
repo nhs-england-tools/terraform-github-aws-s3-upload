@@ -9,7 +9,7 @@ variable "s3_bucket_name" {
 }
 
 variable "s3_bucket_actions" {
-  description = "The actions that the Github Action will have access to. This will default to none."
+  description = "The actions that the GitHub Action will have access to. This will default to none."
   type        = list(string)
   default     = []
 }
@@ -24,8 +24,8 @@ variable "github_organisation" {
   type        = string
 }
 
-variable "github_repo" {
-  description = "The GitHub repo that the GitHub Action resides in."
+variable "github_repository" {
+  description = "The GitHub repository that the GitHub Action resides in."
   type        = string
 }
 

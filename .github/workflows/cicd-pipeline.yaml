@@ -27,6 +27,8 @@ jobs:
     uses: ./.github/workflows/check-file-format.yaml
   check-markdown-format:
     uses: ./.github/workflows/check-markdown-format.yaml
+  check-terraform-format:
+    uses: ./.github/workflows/check-terraform-format.yaml
   cloc-repository:
     uses: ./.github/workflows/cloc-repository.yaml
   cicd-pipeline-test:
@@ -37,6 +39,7 @@ jobs:
         scan-secrets,
         check-file-format,
         check-markdown-format,
+        check-terraform-format,
         cloc-repository,
       ]
     timeout-minutes: 10
