@@ -13,7 +13,9 @@ set -e
 
 # ==============================================================================
 
-image_version=${TERRAFORM_VERSION:-1.5.0}
+versions=$(git rev-parse --show-toplevel)/.tool-versions
+terraform_version=$(grep terraform $versions | cut -f2 -d' ')
+image_version=${terraform_version:-latest}
 
 # ==============================================================================
 

@@ -1,4 +1,4 @@
-# Repository Template
+# Terraform GitHub AWS S3 Upload
 
 This module provides the iam role and policy for a GitHub action to use to upload files to an S3 bucket. This module includes the following:
 
@@ -7,7 +7,7 @@ This module provides the iam role and policy for a GitHub action to use to uploa
 
 ## Table of Contents
 
-- [Repository Template](#repository-template)
+- [Terraform GitHub AWS S3 Upload](#terraform-github-aws-s3-upload)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)

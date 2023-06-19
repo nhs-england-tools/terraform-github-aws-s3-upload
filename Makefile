@@ -1,11 +1,18 @@
-NODEJS_VERSION = 20.3.0
-TERRAFORM_VERSION = 1.5.0
+example-build: # Build example project
+	cd examples/react-app
+	yarn install
+	yarn build
+
+example-upload: # Upload example files - mandatory: AWS_S3_BUCKET_NAME=[AWS S3 bucket name]
+	cd examples/react-app
+	aws s3 sync dist s3://$(AWS_S3_BUCKET_NAME)
 
 config: # Configure development environment
+	make githooks-install
 	make \
-		githooks-install \
 		node-install \
-		terraform-install
+		terraform-install \
+	||:
 
 githooks-install: # Install git hooks configured in this repository
 	echo "./scripts/githooks/pre-commit" > .git/hooks/pre-commit
@@ -13,11 +20,11 @@ githooks-install: # Install git hooks configured in this repository
 
 terraform-install: # Install Terraform
 	asdf plugin add terraform ||:
-	asdf install terraform ${TERRAFORM_VERSION}
+	asdf install terraform
 
 node-install: # Install Node.js
 	asdf plugin add nodejs ||:
-	asdf install nodejs ${NODEJS_VERSION}
+	asdf install nodejs
 
 # ==============================================================================
 

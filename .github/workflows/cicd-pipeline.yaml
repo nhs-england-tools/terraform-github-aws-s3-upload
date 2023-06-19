@@ -14,13 +14,18 @@ jobs:
       build_datetime: ${{ steps.metadata.outputs.build_datetime }}
       build_timestamp: ${{ steps.metadata.outputs.build_timestamp }}
       build_epoch: ${{ steps.metadata.outputs.build_epoch }}
+      nodejs_version: ${{ steps.metadata.outputs.nodejs_version }}
+      terraform_version: ${{ steps.metadata.outputs.terraform_version }}
     steps:
+      - uses: actions/checkout@v3
       - id: metadata
         run: |
           datetime=$(date -u +'%Y-%m-%dT%H:%M:%S%z')
           echo "build_datetime=$datetime" >> $GITHUB_OUTPUT
           echo "build_timestamp=$(date --date=$datetime -u +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
           echo "build_epoch=$(date --date=$datetime -u +'%s')" >> $GITHUB_OUTPUT
+          echo "nodejs_version=$(grep nodejs .tool-versions | cut -f2 -d' ')" >> $GITHUB_OUTPUT
+          echo "terraform_version=$(grep terraform .tool-versions | cut -f2 -d' ')" >> $GITHUB_OUTPUT
   scan-secrets:
     uses: ./.github/workflows/scan-secrets.yaml
   check-file-format:
@@ -51,9 +56,11 @@ jobs:
           export BUILD_TIMESTAMP="${{ needs.get-metadata.outputs.build_timestamp }}"
           export BUILD_EPOCH="${{ needs.get-metadata.outputs.build_epoch }}"
           make list-variables
-      # - name: Run Tests ...
-      #   run: |
-      #     ?
+      - name: Authenticate with AWS over OIDC
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.ASSUME_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
   cicd-pipeline-build:
     permissions:
       id-token: write
@@ -72,14 +79,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "${{ needs.get-metadata.outputs.nodejs_version }}"
           cache: yarn
-          cache-dependency-path: "./examples/react-app/react-app-s3"
-      - name: Authenticate with AWS over OIDC
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: ${{ secrets.ASSUME_ROLE_ARN }}
-          role-session-name: react-app-s3-role
-          aws-region: eu-west-2
-      - name: Copy files to the s3 website content bucket
-        run: cd examples/react-app/react-app-s3 && yarn install && yarn build && aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}
+      # - name: Authenticate with AWS over OIDC
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     role-to-assume: ${{ secrets.ASSUME_ROLE_ARN }}
+      #     role-session-name: react-app-s3-role
+      #     aws-region: ${{ secrets.AWS_REGION }}
+      - name: Copy files to the AWS S3 website content bucket
+        run: |
+          make example-build
+          #make example-upload AWS_S3_BUCKET_NAME=${{ secrets.AWS_S3_BUCKET_NAME }}
