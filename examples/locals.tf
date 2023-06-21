@@ -1,3 +1,6 @@
 locals {
-  s3_bucket_name = "nhs-england-tools-terraform-github-aws-s3-upload"
+  s3_bucket_name = "your-bucket-name"
+  tags = {
+    environment = "dev"
+  }
 }

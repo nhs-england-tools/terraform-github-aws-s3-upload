@@ -1,5 +1,5 @@
 module "github_aws_s3_upload" {
-  source            = "github.com/nhs-england-tools/terraform-github-action-s3-upload?ref=v0.0.6-dev"
+  source            = "../"
   project_name      = "terraform-github-aws-s3-upload"
   s3_bucket_name    = local.s3_bucket_name
   s3_bucket_actions = ["s3:PutObject"]
@@ -13,4 +13,5 @@ module "github_aws_s3_upload" {
   github_organisation = "nhs-england-tools"
   github_repository   = "terraform-github-aws-s3-upload"
   github_branch       = "*"
+  tags                = local.tags
 }

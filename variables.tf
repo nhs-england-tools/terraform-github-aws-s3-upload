@@ -34,3 +34,9 @@ variable "github_branch" {
   type        = string
   default     = "main"
 }
+
+variable "tags" {
+  description = "Tags to apply to the resources created."
+  type        = map(string)
+  default     = {}
+}

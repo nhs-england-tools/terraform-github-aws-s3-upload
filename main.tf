@@ -20,6 +20,7 @@ resource "aws_iam_role" "github_s3_upload_role" {
       }
     ]
   })
+  tags = var.tags
 }
 
 resource "aws_iam_policy" "github_s3_upload_policy" {
@@ -34,9 +35,10 @@ resource "aws_iam_policy" "github_s3_upload_policy" {
       }
     ]
   })
+  tags = var.tags
 }
 
-resource "aws_iam_role_policy_attachment" "github_s3_upload_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "github_s3_upload_role_policy_attachment" {
   policy_arn = aws_iam_policy.github_s3_upload_policy.arn
   role       = aws_iam_role.github_s3_upload_role.name
 }

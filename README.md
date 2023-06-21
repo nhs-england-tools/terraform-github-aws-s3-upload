@@ -24,7 +24,7 @@ This module provides the iam role and policy for a GitHub action to use to uploa
 This module can be called by including the following:
 
 ```hcl
-module "github_action_s3_upload" {
+module "github_s3_upload" {
   source               = "github.com/nhs-england-tools/terraform-github-action-s3-upload?ref=v0.0.1"
   project_name         = "my_github_action_s3_upload1"
   s3_bucket_name       = "my_s3_bucket_to_upload_to"
