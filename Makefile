@@ -1,8 +1,30 @@
-config: githooks-install # Configure development environment
+example-build: # Build example project
+	cd examples/react-app
+	yarn install
+	yarn build
+
+example-upload: # Upload example files - mandatory: AWS_S3_BUCKET_NAME=[AWS S3 bucket name]
+	cd examples/react-app
+	aws s3 sync dist s3://$(AWS_S3_BUCKET_NAME)
+
+config: # Configure development environment
+	make githooks-install
+	make \
+		node-install \
+		terraform-install \
+	||:
 
 githooks-install: # Install git hooks configured in this repository
 	echo "./scripts/githooks/pre-commit" > .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
+
+terraform-install: # Install Terraform
+	asdf plugin add terraform ||:
+	asdf install terraform
+
+node-install: # Install Node.js
+	asdf plugin add nodejs ||:
+	asdf install nodejs
 
 # ==============================================================================
 

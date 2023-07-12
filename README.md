@@ -1,4 +1,4 @@
-# Repository Template
+# Terraform GitHub AWS S3 Upload
 
 This module provides the iam role and policy for a GitHub action to use to upload files to an S3 bucket. This module includes the following:
 
@@ -7,7 +7,7 @@ This module provides the iam role and policy for a GitHub action to use to uploa
 
 ## Table of Contents
 
-- [Repository Template](#repository-template)
+- [Terraform GitHub AWS S3 Upload](#terraform-github-aws-s3-upload)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
@@ -24,18 +24,17 @@ This module provides the iam role and policy for a GitHub action to use to uploa
 This module can be called by including the following:
 
 ```hcl
-module "github_action_s3_upload" {
+module "github_aws_s3_upload" {
   source               = "github.com/nhs-england-tools/terraform-github-action-s3-upload?ref=v0.0.1"
-  project_name         = "my_github_action_s3_upload1"
-  s3_bucket_name       = "my_s3_bucket_to_upload_to"
-  s3_bucket_actions    = ["s3:PutObject"]
-  s3_bucket_resources  = [
-    "arn:aws:s3:::my_s3_bucket_to_upload_to/some_file.js",
-    "arn:aws:s3:::my_s3_bucket_to_upload_to/some_other_file.js"
+  project_name         = "my-github-aws-s3-upload"
+  github_organisation  = "my-github-organisation"
+  github_repository    = "my-github-repository"
+  github_branch        = "my-main-branch"
+  bucket_name          = "my-bucket-to-upload-to"
+  bucket_resources     = [
+    "arn:aws:s3:::my_bucket_to_upload_to/some_file.js",
+    "arn:aws:s3:::my_bucket_to_upload_to/some_other_file.js"
     ]
-  github_organisation  = "my_github_organisation"
-  github_repo          = "my_github_repo"
-  github_branch        = "my_main_branch"
 }
 ```
 
