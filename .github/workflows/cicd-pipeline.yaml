@@ -67,14 +67,14 @@ jobs:
           export BUILD_TIMESTAMP="${{ needs.get-metadata.outputs.build_timestamp }}"
           export BUILD_EPOCH="${{ needs.get-metadata.outputs.build_epoch }}"
           make list-variables
-      - name: Test
+      - name: Test Terraform
         run: |
+          cd examples
           make \
             terraform-init \
             terraform-plan \
             terraform-apply \
             terraform-destroy
-
   cicd-pipeline-build:
     permissions:
       id-token: write
