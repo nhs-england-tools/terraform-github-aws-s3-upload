@@ -48,19 +48,19 @@ jobs:
       - name: Authenticate with AWS over OIDC
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN_PROVISION_EXAMPLE }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_PROVISION_EXAMPLE }}
           aws-region: ${{ secrets.AWS_REGION }}
       - run: make test-unit action="infrastructure-set-up"
       - name: Authenticate with AWS over OIDC
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN_UPLOAD_EXAMPLE }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_UPLOAD_EXAMPLE }}
           aws-region: ${{ secrets.AWS_REGION }}
       - run: make test-unit action="file-update"
       - name: Authenticate with AWS over OIDC
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN_PROVISION_EXAMPLE }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_PROVISION_EXAMPLE }}
           aws-region: ${{ secrets.AWS_REGION }}
       - run: make test-unit action="infrastructure-tear-down"
   test-lint:
