@@ -63,7 +63,7 @@ jobs:
         with:
           terraform_version: ${{ needs.get-metadata.outputs.terraform_version }}
       - name: Authenticate with AWS over OIDC
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ secrets.AWS_ASSUME_ROLE_ARN_EXAMPLE }}
           aws-region: ${{ secrets.AWS_REGION }}
@@ -108,7 +108,7 @@ jobs:
           node-version: "${{ needs.get-metadata.outputs.nodejs_version }}"
           cache: yarn
       # - name: Authenticate with AWS over OIDC
-      #   uses: aws-actions/configure-aws-credentials@v2
+      #   uses: aws-actions/configure-aws-credentials@v3
       #   with:
       #     role-to-assume: ${{ secrets.ASSUME_ROLE_ARN }}
       #     role-session-name: react-app-s3-role
