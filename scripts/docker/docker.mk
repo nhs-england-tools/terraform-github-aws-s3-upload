@@ -5,8 +5,8 @@
 # In most cases there should be no need to modify the existing make targets.
 
 # Your default 'DOCKER_IMAGE' and 'DOCKER_TITLE' are passed to the functions as environment variables
-DOCKER_IMAGE := ghcr.io/org/repo
-DOCKER_TITLE := My Docker image
+DOCKER_IMAGE := $(or $(or $(DOCKER_IMAGE), $(IMAGE)), ghcr.io/org/repo)
+DOCKER_TITLE := $(or $(or $(DOCKER_TITLE), $(TITLE)), My Docker image)
 
 docker-build: # Build Docker image - optional: dir=[path to the Dockerfile to use, default is '.']
 	source ./scripts/docker/docker.lib.sh

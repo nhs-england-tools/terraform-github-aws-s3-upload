@@ -92,3 +92,17 @@ function terraform-validate() {
 
   cmd="$cmd" "$project_dir/scripts/terraform/terraform.sh"
 }
+
+# Remove Terraform files.
+# Arguments (provided as environment variables):
+#   dir=[path to a directory where the command will be executed, relative to the project's top-level directory, default is '.']
+function terraform-clean() {
+
+  cd "${dir:-$PWD}"
+  rm -rf \
+    .terraform \
+    terraform.log \
+    terraform.tfplan \
+    terraform.tfstate \
+    terraform.tfstate.backup
+}

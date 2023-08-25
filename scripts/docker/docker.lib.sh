@@ -232,7 +232,7 @@ function _append-metadata() {
 function _get-version() {
 
   local dir=${dir:-$PWD}
-  head -n 1 "${dir}/.version"
+  head -n 1 "${dir}/.version" 2> /dev/null ||:
 }
 
 # Print all Docker image versions.
@@ -241,7 +241,7 @@ function _get-version() {
 function _get-all-versions() {
 
   local dir=${dir:-$PWD}
-  cat "${dir}/.version"
+  cat "${dir}/.version" 2> /dev/null ||:
 }
 
 # Print Git branch name. Check the GitHub variables first and then the local Git
