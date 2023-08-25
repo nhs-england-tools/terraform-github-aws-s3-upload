@@ -34,11 +34,13 @@ exit_code=0
 
 function main() {
 
+  cd $(git rev-parse --show-toplevel)
+
   if is-arg-true "$ALL_FILES"; then
 
     # Check all files
     docker run --rm --platform linux/amd64 \
-      --volume=$PWD:/check \
+      --volume $PWD:/check \
       mstruebing/editorconfig-checker:$image_version \
         ec \
           --exclude '.git/'

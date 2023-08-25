@@ -25,15 +25,17 @@ image_version=v8.17.0@sha256:99e40155529614d09d264cc886c1326c9a4593ad851ccbeaaed
 
 function main() {
 
+  cd $(git rev-parse --show-toplevel)
+
   if is_arg_true "$ALL_FILES"; then
     # Scan whole git history
-    cmd="detect --source=/scan --verbose --redact"
+    cmd="detect --source /scan --verbose --redact"
   elif [ "$ALL_FILES" == "last-commit" ]; then
     # Scan the last commit
-    cmd="detect --source=/scan --verbose --redact --log-opts=-1"
+    cmd="detect --source /scan --verbose --redact --log-opts -1"
   else
     # Scan staged files only
-    cmd="protect --source=/scan --verbose --staged"
+    cmd="protect --source /scan --verbose --staged"
   fi
   # Include base line file if it exists
   if [ -f $PWD/scripts/config/.gitleaks-baseline.json ]; then
@@ -41,11 +43,11 @@ function main() {
   fi
 
   docker run --rm --platform linux/amd64 \
-    --volume=$PWD:/scan \
-    --workdir=/scan \
+    --volume $PWD:/scan \
+    --workdir /scan \
     ghcr.io/gitleaks/gitleaks:$image_version \
       $cmd \
-      --config /scan/scripts/config/.gitleaks.toml
+      --config /scan/scripts/config/gitleaks.toml
 }
 
 function is_arg_true() {

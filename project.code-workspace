@@ -1,7 +1,7 @@
 {
   "folders": [
     {
-      "name": "Project Repository - Terraform GitHub AWS S3 Upload",
+      "name": "Terraform GitHub AWS S3 Upload module",
       "path": "."
     }
   ]
