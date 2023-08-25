@@ -1,4 +1,4 @@
-# Terraform GitHub AWS S3 Upload
+# Terraform GitHub AWS S3 Upload module
 
 This module provides the iam role and policy for a GitHub action to use to upload files to an S3 bucket. This module includes the following:
 
@@ -7,7 +7,7 @@ This module provides the iam role and policy for a GitHub action to use to uploa
 
 ## Table of Contents
 
-- [Terraform GitHub AWS S3 Upload](#terraform-github-aws-s3-upload)
+- [Terraform GitHub AWS S3 Upload module](#terraform-github-aws-s3-upload-module)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
