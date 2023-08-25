@@ -11,6 +11,11 @@
 
 # Please, add your custom content below!
 
+# Ignore the lock file as this is just an example
+.terraform.lock.hcl
+# Ignore Terraform plan
+*tfplan*
+
 # SEE: https://github.com/github/gitignore/blob/main/Terraform.gitignore
 
 # Local .terraform directories

@@ -15,14 +15,6 @@ on:
         description: "Build epoch, set by the CI/CD pipeline workflow"
         required: true
         type: string
-      nodejs_version:
-        description: "Node.js version, set by the CI/CD pipeline workflow"
-        required: true
-        type: string
-      python_version:
-        description: "Python version, set by the CI/CD pipeline workflow"
-        required: true
-        type: string
       terraform_version:
         description: "Terraform version, set by the CI/CD pipeline workflow"
         required: true
@@ -36,15 +28,33 @@ jobs:
   test-unit:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v3
-      - name: "Run unit test suite"
-        run: |
-          make test-unit
-      - name: "Save the result of fast test suite"
-        run: |
-          echo "Nothing to save"
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ inputs.terraform_version }}
+      - name: Authenticate with AWS over OIDC
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_PROVISION_EXAMPLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: make test-unit action="infrastructure-set-up"
+      - name: Authenticate with AWS over OIDC
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_UPLOAD_EXAMPLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: make test-unit action="file-update"
+      - name: Authenticate with AWS over OIDC
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ASSUME_ROLE_NAME_PROVISION_EXAMPLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - run: make test-unit action="infrastructure-tear-down"
   test-lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
